@@ -41,8 +41,7 @@ app.use('/js', express.static('spa'));
 
 const PORT = 8080;
 
-app.po       res.send("received measurement into " +  insertedId);
-st('/measurement', function (req, res) {
+app.post('/measurement', function (req, res) {
 -       console.log("device id    : " + req.body.id + " key         : " + req.body.key + " temperature : " + req.body.t + " humidity    : " + req.body.h);	
     const {insertedId} = insertMeasurement({id:req.body.id, t:req.body.t, h:req.body.h});
 	res.send("received measurement into " +  insertedId);
@@ -99,6 +98,7 @@ function render(template, vars) {
 app.get('/device/:id', function (req,res) {
 
     var device = db.public.many("SELECT * FROM devices WHERE device_id = '"+req.params.id+"'");
+    res.send("received measurement into " +  insertedId);
 
 });
 
