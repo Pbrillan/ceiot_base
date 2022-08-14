@@ -48,10 +48,21 @@ app.post('/measurement', function (req, res) {
 });
 
 app.post('/device', function (req, res) {
-	console.log("device id    : " + req.body.id + " name        : " + req.body.n + " key         : " + req.body.k );
+        console.log("device id    : " + req.body.id + " name        : " + req.body.n + " key         : " + req.body.k );
+    
+	var gdevice = db.public.many("SELECT * FROM devices WHERE device_id = '"+req.body.id+"'");
+	console.log(gdevice);
+	console.log("Verificando ...");
+	if (Object.entries(gdevice).length === 0)	
+	{ 
+        db.public.none("INSERT INTO devices VALUES ('"+req.body.id+ "', '"+req.body.n+"', '"+req.body.k+"')");
+        console.log("Dispositivo creado");	
+	}
+	else{
+	console.log("Dispositivo existente");
+	}
+        res.send("received new device");
 
-    db.public.none("INSERT INTO devices VALUES ('"+req.body.id+ "', '"+req.body.n+"', '"+req.body.k+"')");
-	res.send("received new device");
 });
 
 
